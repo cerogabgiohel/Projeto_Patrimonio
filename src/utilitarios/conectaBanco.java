@@ -19,7 +19,7 @@ public class conectaBanco {
         try {
              System.setProperty("jdbc.Drivers",driver);
             conn = DriverManager.getConnection(caminho);
-            JOptionPane.showMessageDialog(null, "Conectado com sucesso");
+            //JOptionPane.showMessageDialog(null, "Conectado com sucesso");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro de conexão\n Erro: "+ex.getMessage());
             
@@ -30,9 +30,26 @@ public class conectaBanco {
    public void desconeta(){
         try {
             conn.close();
-            JOptionPane.showMessageDialog(null, "Desconectado com sucesso");
+            //JOptionPane.showMessageDialog(null, "Desconectado com sucesso");
         } catch (SQLException ex) {
              JOptionPane.showMessageDialog(null, "Erro ao fechar a conexão\n Erro: "+ex.getMessage());
+        }
+   }
+   
+   public PreparedStatement criarPreparedStatement(String sql){
+       try{
+           return this.conn.prepareStatement(sql);
+       }catch(SQLException e){
+           return null;
+       }
+   }
+   
+   public void executaSQL(String sql){
+        try {
+            stm = conn.createStatement(rs.TYPE_FORWARD_ONLY,rs.CONCUR_READ_ONLY);
+            int rs = stm.executeUpdate(sql);
+        } catch (SQLException ex) {
+              JOptionPane.showMessageDialog(null, "Erro no executaSQL!\n Erro: "+ex.getMessage());
         }
    }
     

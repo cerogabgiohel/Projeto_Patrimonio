@@ -43,7 +43,6 @@ public class AdicionarPatrimonio extends javax.swing.JFrame {
         jTextFieldPatrimonio = new javax.swing.JTextField();
         jTextFieldLocal = new javax.swing.JTextField();
         jButtonSalvar = new javax.swing.JButton();
-        jButtonVoltar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -70,8 +69,6 @@ public class AdicionarPatrimonio extends javax.swing.JFrame {
             }
         });
 
-        jButtonVoltar.setText("Voltar");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -96,11 +93,7 @@ public class AdicionarPatrimonio extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(181, 181, 181)
                         .addComponent(jButtonSalvar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButtonVoltar)
-                .addGap(24, 24, 24))
+                .addContainerGap(153, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,9 +112,7 @@ public class AdicionarPatrimonio extends javax.swing.JFrame {
                 .addComponent(jTextFieldLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonSalvar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonVoltar)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -150,7 +141,8 @@ public class AdicionarPatrimonio extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        pack();
+        setSize(new java.awt.Dimension(485, 340));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldEquipamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldEquipamentoActionPerformed
@@ -164,11 +156,14 @@ public class AdicionarPatrimonio extends javax.swing.JFrame {
             pst.setString(2, jTextFieldPatrimonio.getText());
             pst.setString(3, jTextFieldLocal.getText());
             pst.executeUpdate();
-            JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!");
+            JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
         } catch (SQLException ex) {
             Logger.getLogger(AdicionarPatrimonio.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(rootPane, "Erro na inserção! /n Erro: "+ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro na inserção! /n Erro: "+ex.getMessage());
         }
+        jTextFieldEquipamento.setText("");
+        jTextFieldLocal.setText("");
+        jTextFieldPatrimonio.setText("");
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     /**
@@ -208,7 +203,6 @@ public class AdicionarPatrimonio extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSalvar;
-    private javax.swing.JButton jButtonVoltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

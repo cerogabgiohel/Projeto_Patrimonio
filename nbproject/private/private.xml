@@ -4,8 +4,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Cerogabgiohel/Documents/NetBeansProjects/ArmazenadorPatrimonio/src/Formularios/Principal.java</file>
-            <file>file:/C:/Users/Cerogabgiohel/Documents/NetBeansProjects/ArmazenadorPatrimonio/src/armazenadorpatrimonio/ArmazenadorPatrimonio.java</file>
-            <file>file:/C:/Users/Cerogabgiohel/Documents/NetBeansProjects/ArmazenadorPatrimonio/src/utilitarios/CriarBanco.java</file>
+            <file>file:/C:/Users/Cerogabgiohel/Documents/NetBeansProjects/ArmazenadorPatrimonio/src/Formularios/RemoverPatrimonio.java</file>
+            <file>file:/C:/Users/Cerogabgiohel/Documents/NetBeansProjects/ArmazenadorPatrimonio/src/Formularios/AdicionarPatrimonio.java</file>
             <file>file:/C:/Users/Cerogabgiohel/Documents/NetBeansProjects/ArmazenadorPatrimonio/src/utilitarios/conectaBanco.java</file>
         </group>
     </open-files>
