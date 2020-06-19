@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Cerogabgiohel
+ * @author Gabriel
  */
 public class RemoverPatrimonio extends javax.swing.JFrame {
     conectaBanco conecta = new conectaBanco();

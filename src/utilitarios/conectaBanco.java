@@ -15,16 +15,17 @@ public class conectaBanco {
     private String caminho = "jdbc:sqlite:C:\\Users\\Cerogabgiohel\\Downloads\\SQLiteDatabaseBrowserPortable\\Data\\patrimonios.db";
     public Connection conn;
     
-   public void conexao(){      
+   public Connection conexao(){      
         try {
              System.setProperty("jdbc.Drivers",driver);
             conn = DriverManager.getConnection(caminho);
             //JOptionPane.showMessageDialog(null, "Conectado com sucesso");
+            return conn;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro de conexão\n Erro: "+ex.getMessage());
             
         }
-       
+       return null;
    }
    
    public void desconeta(){
@@ -36,21 +37,15 @@ public class conectaBanco {
         }
    }
    
-   public PreparedStatement criarPreparedStatement(String sql){
-       try{
-           return this.conn.prepareStatement(sql);
-       }catch(SQLException e){
-           return null;
-       }
-   }
-   
-   public void executaSQL(String sql){
+   public Connection executaSQL(String sql){
         try {
             stm = conn.createStatement(rs.TYPE_FORWARD_ONLY,rs.CONCUR_READ_ONLY);
             int rs = stm.executeUpdate(sql);
+            return conn;
         } catch (SQLException ex) {
               JOptionPane.showMessageDialog(null, "Erro no executaSQL!\n Erro: "+ex.getMessage());
         }
+        return null;
    }
     
 }
