@@ -37,15 +37,15 @@ public class conectaBanco {
         }
    }
    
-   public Connection executaSQL(String sql){
+   public void executaSQL(String sql){
         try {
             stm = conn.createStatement(rs.TYPE_FORWARD_ONLY,rs.CONCUR_READ_ONLY);
             int rs = stm.executeUpdate(sql);
-            return conn;
+           
         } catch (SQLException ex) {
               JOptionPane.showMessageDialog(null, "Erro no executaSQL!\n Erro: "+ex.getMessage());
         }
-        return null;
+       
    }
     
 }
