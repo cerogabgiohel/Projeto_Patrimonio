@@ -35,6 +35,7 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Armazenador de Patrimônios TRE-MG");
+        setResizable(false);
 
         jMenu1.setText("Arquivo");
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
@@ -64,7 +65,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem2);
 
-        jMenuItem3.setText("Pesquisar Equipamento");
+        jMenuItem3.setText("Editar Equipamento");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
@@ -127,7 +128,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        PesquisarPatrimonio pesqPat = new PesquisarPatrimonio();
+        EditarPatrimonio pesqPat = new EditarPatrimonio();
         pesqPat.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
