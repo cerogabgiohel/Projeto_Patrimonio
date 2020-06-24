@@ -44,7 +44,11 @@ public class EditarPatrimonio extends javax.swing.JFrame {
         jTextFieldLocal = new javax.swing.JTextField();
         jButtonEditar = new javax.swing.JButton();
         jComboBoxId = new javax.swing.JComboBox<>();
+        jTextFieldBuscaPatrimonio = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jButtonBuscar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -75,12 +79,6 @@ public class EditarPatrimonio extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel3.setText("Equipamento: ");
 
-        jTextFieldEquipamento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldEquipamentoActionPerformed(evt);
-            }
-        });
-
         jLabel4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel4.setText("Local:");
 
@@ -91,10 +89,22 @@ public class EditarPatrimonio extends javax.swing.JFrame {
             }
         });
 
-        jComboBoxId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione um id" }));
-        jComboBoxId.addActionListener(new java.awt.event.ActionListener() {
+        jComboBoxId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID" }));
+        jComboBoxId.setEnabled(false);
+
+        jTextFieldBuscaPatrimonio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldBuscaPatrimonioKeyReleased(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel6.setText("Patrimônio a ser Buscado:");
+
+        jButtonBuscar.setText("Buscar");
+        jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxIdActionPerformed(evt);
+                jButtonBuscarActionPerformed(evt);
             }
         });
 
@@ -102,9 +112,10 @@ public class EditarPatrimonio extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(159, 159, 159)
+                .addComponent(jComboBoxId, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextFieldEquipamento, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,20 +134,34 @@ public class EditarPatrimonio extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextFieldPatrimonio)
                             .addComponent(jTextFieldLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jComboBoxId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(66, 66, 66))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonBuscar)
+                        .addGap(107, 107, 107))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jTextFieldBuscaPatrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
-                .addComponent(jTextFieldEquipamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextFieldEquipamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldBuscaPatrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addGap(6, 6, 6)
-                .addComponent(jTextFieldPatrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldPatrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addGap(2, 2, 2)
@@ -147,35 +172,43 @@ public class EditarPatrimonio extends javax.swing.JFrame {
                     .addComponent(jComboBoxId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel1.setText("Editar Patrimônio");
 
+        jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel5.setText("Buscar Patrimônio");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
+                .addGap(164, 164, 164)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(89, 89, 89))
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(191, 191, 191)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(5, 5, 5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(29, 29, 29))
         );
 
-        setSize(new java.awt.Dimension(544, 519));
+        setSize(new java.awt.Dimension(712, 519));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -196,14 +229,10 @@ public class EditarPatrimonio extends javax.swing.JFrame {
                 
             }
         } catch (SQLException ex) {
-           JOptionPane.showMessageDialog(null, "Erro ao mostrar na tabela!\nERRO: " + ex);
+           JOptionPane.showMessageDialog(null, "Erro ao mostrar na tabela! ERRO: " + ex);
         }
         
     }//GEN-LAST:event_jTablePatrimonioMouseClicked
-
-    private void jTextFieldEquipamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldEquipamentoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldEquipamentoActionPerformed
 
       private void preencheTabela() {
         String sql = "select * from armazenador";
@@ -212,7 +241,7 @@ public class EditarPatrimonio extends javax.swing.JFrame {
             rs = pst.executeQuery();
             jTablePatrimonio.setModel(DbUtils.resultSetToTableModel(rs));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro no Preencher Tabela\nErro: " + ex);
+            JOptionPane.showMessageDialog(null, "Erro no Preencher Tabela. Erro: " + ex);
         }
 
     }
@@ -226,7 +255,7 @@ public class EditarPatrimonio extends javax.swing.JFrame {
                 jComboBoxId.addItem(rs.getString("id"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(EditarPatrimonio.class.getName()).log(Level.SEVERE, null, ex);
+           JOptionPane.showMessageDialog(null, "Erro na Combo Box. Erro: " + ex);
         }
           
           
@@ -239,6 +268,13 @@ public class EditarPatrimonio extends javax.swing.JFrame {
         +"local = '"+jTextFieldLocal.getText()+"'"
         +"where id = "+jComboBoxId.getSelectedItem().toString();
         try {
+            if(jTextFieldEquipamento.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "O campo do Equipamento está vazio! Favor preenchê-lo");    
+            }else if(jTextFieldPatrimonio.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "O campo do Patrimônio está vazio! Favor preenchê-lo");
+            }else if(jTextFieldLocal.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "O campo do Local está vazio! Favor preenchê-lo");
+            }else{
             pst=conn.prepareStatement(sql);
             pst.execute();
             JOptionPane.showMessageDialog(null, "O Equipamento foi editado com sucesso");
@@ -246,14 +282,61 @@ public class EditarPatrimonio extends javax.swing.JFrame {
             jTextFieldEquipamento.setText("");
             jTextFieldPatrimonio.setText("");
             jTextFieldLocal.setText("");
+            jComboBoxId.getModel().setSelectedItem("");
+            }
+            
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro na edição /nErro: " +ex);
+            JOptionPane.showMessageDialog(null, "Erro na edição Erro: " +ex);
         }
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
-    private void jComboBoxIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxIdActionPerformed
+    private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
+        String sql = "select * from armazenador where patrimônio = ?";
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, jTextFieldBuscaPatrimonio.getText());
+            rs = pst.executeQuery();
+            
+            if(rs.next()){         
+                jTextFieldEquipamento.setText(rs.getString("equipamento"));               
+                jTextFieldPatrimonio.setText(rs.getString("patrimônio"));                
+                jTextFieldLocal.setText(rs.getString("local"));
+                jComboBoxId.getModel().setSelectedItem(rs.getString("id"));
+                
+            }else{
+                JOptionPane.showMessageDialog(null, "O equipamento buscado não está cadastrado");
+                jTextFieldEquipamento.setText("");
+                jTextFieldPatrimonio.setText("");
+                jTextFieldLocal.setText("");
+                jComboBoxId.getModel().setSelectedItem("");
+            }
+        } catch (Exception ex) {
+             JOptionPane.showMessageDialog(null, "Erro na Busca. Erro:");
+        }
+        
+        
+        
+    }//GEN-LAST:event_jButtonBuscarActionPerformed
+
+    private void jTextFieldBuscaPatrimonioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldBuscaPatrimonioKeyReleased
+         String sql = "select * from armazenador where patrimônio = ?";
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, jTextFieldBuscaPatrimonio.getText());
+            rs = pst.executeQuery();
+            
+            if(rs.next()){         
+                jTextFieldEquipamento.setText(rs.getString("equipamento"));               
+                jTextFieldPatrimonio.setText(rs.getString("patrimônio"));                
+                jTextFieldLocal.setText(rs.getString("local"));
+                jComboBoxId.getModel().setSelectedItem(rs.getString("id"));
+                
+            }
+        } catch (Exception ex) {
+             JOptionPane.showMessageDialog(null, "Erro na Busca. Erro:");
+        }
+        
+    }//GEN-LAST:event_jTextFieldBuscaPatrimonioKeyReleased
 
   
  
@@ -290,15 +373,19 @@ public class EditarPatrimonio extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.ButtonGroup buttonGroup4;
+    private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JComboBox<String> jComboBoxId;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTablePatrimonio;
+    private javax.swing.JTextField jTextFieldBuscaPatrimonio;
     private javax.swing.JTextField jTextFieldEquipamento;
     private javax.swing.JTextField jTextFieldLocal;
     private javax.swing.JTextField jTextFieldPatrimonio;

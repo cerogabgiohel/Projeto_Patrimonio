@@ -152,19 +152,27 @@ public class AdicionarPatrimonio extends javax.swing.JFrame {
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         try( PreparedStatement pst = conecta.conn.prepareStatement("insert into armazenador(equipamento,patrimônio,local)values(?,?,?)");) {
-           
+           if(jTextFieldEquipamento.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "O campo do Equipamento está vazio! Favor preenchê-lo");    
+            }else if(jTextFieldPatrimonio.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "O campo do Patrimônio está vazio! Favor preenchê-lo");
+            }else if(jTextFieldLocal.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "O campo do Local está vazio! Favor preenchê-lo");
+            }else{
             pst.setString(1, jTextFieldEquipamento.getText());
             pst.setString(2, jTextFieldPatrimonio.getText());
             pst.setString(3, jTextFieldLocal.getText());
             pst.executeUpdate();
             JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+            jTextFieldEquipamento.setText("");
+            jTextFieldLocal.setText("");
+            jTextFieldPatrimonio.setText("");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(AdicionarPatrimonio.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Erro na inserção! /n Erro: "+ex.getMessage());
         }
-        jTextFieldEquipamento.setText("");
-        jTextFieldLocal.setText("");
-        jTextFieldPatrimonio.setText("");
+       
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     /**
