@@ -8,6 +8,7 @@ package Formularios;
 import utilitarios.conectaBanco;
 import java.sql.*;
 import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -15,7 +16,9 @@ import javax.swing.JOptionPane;
  */
 public class RemoverPatrimonio extends javax.swing.JFrame {
     conectaBanco conecta = new conectaBanco();
-     
+    Connection conn = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null; 
       
     /**
      * Creates new form RemoverPatrimonio
@@ -23,6 +26,8 @@ public class RemoverPatrimonio extends javax.swing.JFrame {
     public RemoverPatrimonio() {
         initComponents();
         conecta.conexao();
+       conn = conecta.conexao();
+        preencherTabela();
     }
 
     /**
@@ -38,6 +43,8 @@ public class RemoverPatrimonio extends javax.swing.JFrame {
         jButtonRemover = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jTextFieldPatrimonio = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTablePatrimonio = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -56,31 +63,48 @@ public class RemoverPatrimonio extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel2.setText("Patrimônio: ");
 
+        jTablePatrimonio.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(jTablePatrimonio);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(72, 72, 72)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldPatrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(124, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonRemover)
-                .addGap(147, 147, 147))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldPatrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(jButtonRemover)))
+                .addGap(149, 149, 149))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(48, 48, 48)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTextFieldPatrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(59, 59, 59)
+                .addGap(18, 18, 18)
                 .addComponent(jButtonRemover)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -97,7 +121,7 @@ public class RemoverPatrimonio extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(124, 124, 124))
+                .addGap(187, 187, 187))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,16 +132,35 @@ public class RemoverPatrimonio extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        setSize(new java.awt.Dimension(416, 269));
+        setSize(new java.awt.Dimension(553, 368));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
          conecta.executaSQL("delete from armazenador where patrimônio='"+jTextFieldPatrimonio.getText()+"'");
-         JOptionPane.showMessageDialog(rootPane, "Removido com sucesso!");
+         JOptionPane.showMessageDialog(null, "Removido com sucesso!");
          jTextFieldPatrimonio.setText("");
+         preencherTabela();
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
+     private void preencherTabela(){
+           String sql = "select * from armazenador";
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            jTablePatrimonio.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro no Preencher Tabela. Erro: " + ex);
+        }finally{
+            try{
+                rs.close();
+                pst.close();
+            }catch (Exception e){
+                
+            }
+        }
+
+     }
     /**
      * @param args the command line arguments
      */
@@ -158,6 +201,8 @@ public class RemoverPatrimonio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTablePatrimonio;
     private javax.swing.JTextField jTextFieldPatrimonio;
     // End of variables declaration//GEN-END:variables
 }

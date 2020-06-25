@@ -11,6 +11,7 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -18,12 +19,18 @@ import javax.swing.JOptionPane;
  */
 public class AdicionarPatrimonio extends javax.swing.JFrame {
     conectaBanco conecta = new conectaBanco();
+    Connection conn = null;
+    PreparedStatement pst;
+    ResultSet rs;
     /**
      * Creates new form AdicionarPatrimonio
      */
     public AdicionarPatrimonio() {
         initComponents();
-        conecta.conexao();
+        conn = conecta.conexao();
+        preencheTabela();
+       
+        
     }
 
     /**
@@ -43,6 +50,8 @@ public class AdicionarPatrimonio extends javax.swing.JFrame {
         jTextFieldPatrimonio = new javax.swing.JTextField();
         jTextFieldLocal = new javax.swing.JTextField();
         jButtonSalvar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTablePatrimonio = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -70,50 +79,73 @@ public class AdicionarPatrimonio extends javax.swing.JFrame {
             }
         });
 
+        jTablePatrimonio.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jTablePatrimonio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTablePatrimonioMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTablePatrimonio);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(156, 156, 156)
-                        .addComponent(jLabel4))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(191, 191, 191)
-                        .addComponent(jLabel3))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextFieldLocal, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                            .addComponent(jTextFieldPatrimonio)
-                            .addComponent(jTextFieldEquipamento)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(188, 188, 188)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(181, 181, 181)
-                        .addComponent(jButtonSalvar)))
-                .addContainerGap(153, Short.MAX_VALUE))
+                        .addGap(198, 198, 198)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(jLabel4))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(51, 51, 51)
+                                .addComponent(jLabel3))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(37, 37, 37)
+                                .addComponent(jButtonSalvar))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jTextFieldPatrimonio, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jTextFieldLocal, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jTextFieldEquipamento, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2)
+                        .addGap(212, 212, 212)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldEquipamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldPatrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextFieldPatrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonSalvar)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36))
         );
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -127,22 +159,22 @@ public class AdicionarPatrimonio extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(129, 129, 129)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addGap(164, 164, 164))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(7, 7, 7)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(14, 14, 14)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(485, 340));
+        setSize(new java.awt.Dimension(574, 565));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -151,14 +183,24 @@ public class AdicionarPatrimonio extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldEquipamentoActionPerformed
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-        try( PreparedStatement pst = conecta.conn.prepareStatement("insert into armazenador(equipamento,patrimônio,local)values(?,?,?)");) {
-           if(jTextFieldEquipamento.getText().isEmpty()){
+       
+        try{
+            String sql = "insert into armazenador(equipamento, patrimônio, local) values (?,?,?)";
+            String sql1 = "select * from armazenador where patrimônio = ?";
+            pst = conn.prepareStatement(sql1);
+            pst.setString(1, jTextFieldPatrimonio.getText());
+            rs = pst.executeQuery();
+           
+            if(jTextFieldEquipamento.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "O campo do Equipamento está vazio! Favor preenchê-lo");    
             }else if(jTextFieldPatrimonio.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "O campo do Patrimônio está vazio! Favor preenchê-lo");
             }else if(jTextFieldLocal.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "O campo do Local está vazio! Favor preenchê-lo");
+            }else if(rs.next()){
+             JOptionPane.showMessageDialog(null, "O patrimônio digitado já foi adicionado");   
             }else{
+            pst = conn.prepareStatement(sql);    
             pst.setString(1, jTextFieldEquipamento.getText());
             pst.setString(2, jTextFieldPatrimonio.getText());
             pst.setString(3, jTextFieldLocal.getText());
@@ -167,14 +209,42 @@ public class AdicionarPatrimonio extends javax.swing.JFrame {
             jTextFieldEquipamento.setText("");
             jTextFieldLocal.setText("");
             jTextFieldPatrimonio.setText("");
+            preencheTabela();
             }
         } catch (SQLException ex) {
-            Logger.getLogger(AdicionarPatrimonio.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Erro na inserção! /n Erro: "+ex.getMessage());
+        }finally{
+            try{
+                rs.close();
+                pst.close();
+            }catch (Exception e){
+                
+            }
         }
        
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
+    private void jTablePatrimonioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePatrimonioMouseClicked
+  
+    }//GEN-LAST:event_jTablePatrimonioMouseClicked
+  private void preencheTabela() {
+        String sql = "select * from armazenador";
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            jTablePatrimonio.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro no Preencher Tabela. Erro: " + ex);
+        }finally{
+            try{
+                rs.close();
+                pst.close();
+            }catch (Exception e){
+                
+            }
+        }
+
+    }
     /**
      * @param args the command line arguments
      */
@@ -217,6 +287,8 @@ public class AdicionarPatrimonio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTablePatrimonio;
     private javax.swing.JTextField jTextFieldEquipamento;
     private javax.swing.JTextField jTextFieldLocal;
     private javax.swing.JTextField jTextFieldPatrimonio;

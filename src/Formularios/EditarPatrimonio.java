@@ -214,26 +214,6 @@ public class EditarPatrimonio extends javax.swing.JFrame {
 
    
     
-    private void jTablePatrimonioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePatrimonioMouseClicked
-        int linha = jTablePatrimonio.getSelectedRow();
-        String selecao = jTablePatrimonio.getModel().getValueAt(linha, 3).toString();
-        String sql = "select * from armazenador where id = " + selecao;
-        try {
-            pst = conn.prepareStatement(sql);
-            rs = pst.executeQuery();
-            if(rs.next()){
-                jComboBoxId.setSelectedItem(rs.getString("id"));
-                jTextFieldEquipamento.setText(rs.getString("equipamento"));
-                jTextFieldPatrimonio.setText(rs.getString("patrimônio"));
-                jTextFieldLocal.setText(rs.getString("local"));
-                
-            }
-        } catch (SQLException ex) {
-           JOptionPane.showMessageDialog(null, "Erro ao mostrar na tabela! ERRO: " + ex);
-        }
-        
-    }//GEN-LAST:event_jTablePatrimonioMouseClicked
-
       private void preencheTabela() {
         String sql = "select * from armazenador";
         try {
@@ -242,6 +222,13 @@ public class EditarPatrimonio extends javax.swing.JFrame {
             jTablePatrimonio.setModel(DbUtils.resultSetToTableModel(rs));
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro no Preencher Tabela. Erro: " + ex);
+        }finally{
+            try{
+                rs.close();
+                pst.close();
+            }catch (Exception e){
+                
+            }
         }
 
     }
@@ -256,27 +243,38 @@ public class EditarPatrimonio extends javax.swing.JFrame {
             }
         } catch (SQLException ex) {
            JOptionPane.showMessageDialog(null, "Erro na Combo Box. Erro: " + ex);
+        }finally{
+            try{
+                rs.close();
+                pst.close();
+            }catch (Exception e){
+                
+            }
         }
           
           
       }
     
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
+        
         String sql = "update armazenador set "
         +"equipamento = '"+jTextFieldEquipamento.getText()+"',"
         +"patrimônio = '"+jTextFieldPatrimonio.getText()+"',"
         +"local = '"+jTextFieldLocal.getText()+"'"
         +"where id = "+jComboBoxId.getSelectedItem().toString();
+            
         try {
+        
+            
             if(jTextFieldEquipamento.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "O campo do Equipamento está vazio! Favor preenchê-lo");    
             }else if(jTextFieldPatrimonio.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "O campo do Patrimônio está vazio! Favor preenchê-lo");
             }else if(jTextFieldLocal.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "O campo do Local está vazio! Favor preenchê-lo");
-            }else{
+            }else{        
             pst=conn.prepareStatement(sql);
-            pst.execute();
+            pst.execute();    
             JOptionPane.showMessageDialog(null, "O Equipamento foi editado com sucesso");
             preencheTabela();
             jTextFieldEquipamento.setText("");
@@ -287,6 +285,13 @@ public class EditarPatrimonio extends javax.swing.JFrame {
             
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro na edição Erro: " +ex);
+        }finally{
+            try{
+                rs.close();
+                pst.close();
+            }catch (Exception e){
+                
+            }
         }
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
@@ -312,6 +317,13 @@ public class EditarPatrimonio extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
              JOptionPane.showMessageDialog(null, "Erro na Busca. Erro:");
+        }finally{
+            try{
+                rs.close();
+                pst.close();
+            }catch (Exception e){
+                
+            }
         }
         
         
@@ -333,10 +345,36 @@ public class EditarPatrimonio extends javax.swing.JFrame {
                 
             }
         } catch (Exception ex) {
-             JOptionPane.showMessageDialog(null, "Erro na Busca. Erro:");
+             JOptionPane.showMessageDialog(null, "Erro na Busca. Erro: " +ex);
+        }finally{
+            try{
+                rs.close();
+                pst.close();
+            }catch (Exception e){
+                
+            }
         }
         
     }//GEN-LAST:event_jTextFieldBuscaPatrimonioKeyReleased
+
+    private void jTablePatrimonioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePatrimonioMouseClicked
+      int linha = jTablePatrimonio.getSelectedRow();
+      String selecao = jTablePatrimonio.getModel().getValueAt(linha, 3).toString();
+      String sql = "select * from armazenador where id = "+selecao;
+      try{
+          pst = conn.prepareStatement(sql);
+          rs = pst.executeQuery();
+          if(rs.next()){
+              jComboBoxId.setSelectedItem(rs.getString("id"));
+              jTextFieldEquipamento.setText(rs.getString("equipamento"));
+              jTextFieldPatrimonio.setText(rs.getString("patrimônio"));
+              jTextFieldLocal.setText(rs.getString("local"));
+              preencheTabela();
+          }
+      }catch(Exception ex){
+        JOptionPane.showMessageDialog(null, "Erro na tabela. Erro: " +ex); 
+      }
+    }//GEN-LAST:event_jTablePatrimonioMouseClicked
 
   
  
