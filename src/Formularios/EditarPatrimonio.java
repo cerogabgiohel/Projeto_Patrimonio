@@ -263,8 +263,7 @@ public class EditarPatrimonio extends javax.swing.JFrame {
         +"local = '"+jTextFieldLocal.getText()+"'"
         +"where id = "+jComboBoxId.getSelectedItem().toString();
             
-        try {
-        
+        try {      
             
             if(jTextFieldEquipamento.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "O campo do Equipamento está vazio! Favor preenchê-lo");    
